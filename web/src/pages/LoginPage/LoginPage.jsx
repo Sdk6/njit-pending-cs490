@@ -14,6 +14,11 @@ const LoginPage = () => {
         My default route is named <code>login</code>, link to me with `
         <Link to={routes.login()}>Login</Link>`
       </p>
+
+      <a href={`https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/calendar.events.readonly&include_granted_scopes=true&response_type=code&redirect_uri=${process.env.GOOGLE_OAUTH_REDIRECT_URI}&client_id=${process.env.GOOGLE_OAUTH_CLIENT_ID}`}
+         className="mx-auto block w-48 rounded bg-gray-800 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wide text-white">
+        Login with Google
+      </a>
     </>
   )
 }

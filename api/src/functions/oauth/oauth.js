@@ -1,4 +1,5 @@
 import {logger} from "src/lib/logger";
+import CryptoJS from 'crypto-js'
 
 export const handler = async (event, _context) => {
   switch (event.path) {
@@ -31,7 +32,9 @@ const callback = async (event) => {
     }),
   })
 
-  const { access_token, token_type, scope, error } = JSON.parse(await response.text())
+  const resp = JSON.parse(await response.text())
+  logger.info(resp)
+  const { access_token, refresh_token, scope, error } = resp
 
   if (error) {
     return { statuscode: 400, body: error }
@@ -48,10 +51,9 @@ const callback = async (event) => {
 }
 
 const getProviderUser = async (token) => {
+  logger.info(token);
   const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
     headers: { Authorization: `Bearer ${token}` },
   })
-  const body = await response.text()
-
-  return body
+  return JSON.parse(await response.text())
 }
